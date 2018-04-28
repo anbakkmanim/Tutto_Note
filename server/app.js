@@ -18,7 +18,7 @@ db.on('error', console.error);
 db.once('open', function(){
   console.log("Connected to mongod server");
 });
-mongoose.connect('mongodb://localhost:27017/tuttonote');
+mongoose.connect('mongodb://115.68.24.158:27017/tuttonote');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
