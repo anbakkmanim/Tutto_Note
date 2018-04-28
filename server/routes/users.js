@@ -2,7 +2,6 @@ var express = require('express');
 var Users = require('../models/users');
 var router = express.Router();
 
-<<<<<<< HEAD
 router.get('/', function(req, res, next) {
   Users.find(function(err, userlist){
     if(err){
@@ -30,7 +29,7 @@ router.post('/', function(req, res){
   });
 
 });
-=======
+
 router.get('/:_id', function(req, res, next){
   console.log(req.params._id);
   if(req.params._id === '1234'){
@@ -39,8 +38,6 @@ router.get('/:_id', function(req, res, next){
     res.send({ status: 0 });
   }
 });
-
->>>>>>> 4f03089404c12834f27f76f9ad7b02152f81b75a
 
 
 module.exports = router;
