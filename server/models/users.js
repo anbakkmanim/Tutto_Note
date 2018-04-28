@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var dataSchema = new Schema({}, { collection: 'tuttonote' });
 
 var userSchema = new Schema({
     userid: String ,
@@ -18,5 +17,4 @@ var userSchema = new Schema({
     //     name: String,
     // },
 });
-
 module.exports = mongoose.model('users', userSchema);

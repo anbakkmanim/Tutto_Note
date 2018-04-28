@@ -30,13 +30,22 @@ router.post('/', function(req, res){
 
 });
 
-router.get('/:_id', function(req, res, next){
-  console.log(req.params._id);
-  if(req.params._id === '1234'){
-    res.send({ status: 1, userid: 'AAAA', name: 'ㅁㄴㅇ'});
-  }else{
-    res.send({ status: 0 });
-  }
+router.get('/:userid', function(req, res, next){
+  Users.findOne({userid: req.params.userid}, function(err, user)){
+    if(err){
+      return res.status(500).json({status: 0});
+    }
+    if(!book){
+      return res.status(404).json({status: 0});
+    }
+    res.json(user);
+  });
+  // console.log(req.params._id);
+  // if(req.params._id === '1234'){
+  //   res.send({ status: 1, userid: 'AAAA', name: 'ㅁㄴㅇ'});
+  // }else{
+  //   res.send({ status: 0 });
+  // }
 });
 
 
