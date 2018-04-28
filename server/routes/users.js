@@ -31,11 +31,11 @@ router.post('/', function(req, res){
 });
 
 router.get('/:userid', function(req, res, next){
-  Users.findOne({userid: req.params.userid}, function(err, user)){
+  Users.findOne({userid: req.params.userid}, function(err, user){
     if(err){
       return res.status(500).json({status: 0});
     }
-    if(!book){
+    if(!user){
       return res.status(404).json({status: 0});
     }
     res.json(user);
