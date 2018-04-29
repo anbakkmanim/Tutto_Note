@@ -1,54 +1,57 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
+/**
+ *  Tutto Note node.js Backend Server
+ */
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var Users = require('./models/users');
+// 모듈 불러오기
+const express = require('express');
+const createError = require('http-errors');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
-var app = express();
+// 원격지 관련 기본 세팅
+const mongo_dest = 'mongodb://115.68.24.158:27017/tuttonote';
 
-//mongod connection
-var db = mongoose.connection;
+// 라우터 정의
+let indexRouter = require('./routes/index');
+let usersRouter = require('./routes/users');
+
+let app = express();
+
+// MongoDB 연결
+let db = mongoose.connection;
 db.on('error', console.error);
-db.once('open', function(){
-  console.log("Connected to mongod server");
+db.once('open', () => {
+  console.log('MongoDB 서버에 연결되었습니다.');
 });
-mongoose.connect('mongodb://115.68.24.158:27017/tuttonote');
+mongoose.connect(mongo_dest);
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
+// 앱 세팅
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
+// 정의되지 않은 접속에 404 보내기
+app.use((req, res, next) => {
   next(createError(404));
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+// 에러 핸들러
+app.use((err, req, res, next) => {
+  // 개발 모드일 시 로그에 에러 메시지 출력
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
+  // 에러 응답 보내기
   res.status(err.status || 500);
-  res.render('error');
 });
 
+// 앱 내보내기
 module.exports = app;

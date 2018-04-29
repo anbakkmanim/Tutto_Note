@@ -1,7 +1,12 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+/**
+ *  MongoDB Users 모델
+ */
 
-var userSchema = new Schema({
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+// 스키마 정의
+let userSchema = new Schema({
     userid: String ,
     name: String ,
     password: String ,
@@ -17,4 +22,6 @@ var userSchema = new Schema({
     //     name: String,
     // },
 });
+
+// users 라는 이름으로 스키마 내보내기
 module.exports = mongoose.model('users', userSchema);

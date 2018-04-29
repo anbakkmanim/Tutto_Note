@@ -1,52 +1,54 @@
-var express = require('express');
-var Users = require('../models/users');
-var router = express.Router();
+/**
+ *  /users* 라우터
+ */
 
-router.get('/', function(req, res, next) {
-  Users.find(function(err, userlist){
-    if(err){
+const express = require('express');
+let router = express.Router();
+
+// Users 모델 불러오기
+const Users = require('../models/users');
+
+// /users GET
+router.get('/', (req, res, next) => {
+  Users.find((err, result) => {
+    if (err) {
       console.error(err);
-      res.json({result : 0});
+      res.json({result: 0});
       return;
     }
-    res.json(userlist);
+    res.json(result);
   });
 });
 
-router.post('/', function(req, res){
+// /users POST (body: userid, name, password)
+router.post('/', (req, res, next) => {
   var users = new Users();
-  users.userid = req.query.userid;
-  users.name = req.query.name;
-  users.password = req.query.password;
+  users.userid = req.body.userid;
+  users.name = req.body.name;
+  users.password = req.body.password;
 
-  users.save(function(err){
-    if(err){
+  users.save((err) => {
+    if (err) {
       console.error(err);
       res.json({result: 0});
       return;
     }
     res.json({result: 1});
   });
-
 });
 
-router.get('/:userid', function(req, res, next){
-  Users.findOne({userid: req.params.userid}, function(err, user){
-    if(err){
+// /users/:userid GET
+router.get('/:userid', (req, res, next) => {
+  Users.findOne({userid: req.params.userid}, (err, user) => {
+    if (err) {
       return res.status(500).json({status: 0});
     }
-    if(!user){
+    if (!user) {
       return res.status(404).json({status: 0});
     }
     res.json(user);
   });
-  // console.log(req.params._id);
-  // if(req.params._id === '1234'){
-  //   res.send({ status: 1, userid: 'AAAA', name: 'ㅁㄴㅇ'});
-  // }else{
-  //   res.send({ status: 0 });
-  // }
 });
 
-
+// 라우터 내보내기
 module.exports = router;
