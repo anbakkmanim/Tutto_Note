@@ -1,6 +1,8 @@
 var express = require('express');
+
 var Users = require('../models/users');
 var router = express.Router();
+
 
 router.get('/', function(req, res, next) {
   Users.find(function(err, userlist){
@@ -13,11 +15,11 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.post('/', function(req, res){
+router.post('/', function(req, res, next){
   var users = new Users();
-  users.userid = req.query.userid;
-  users.name = req.query.name;
-  users.password = req.query.password;
+  users.userid = req.body.userid;
+  users.name = req.body.name;
+  users.password = req.body.password;
 
   users.save(function(err){
     if(err){
@@ -27,7 +29,6 @@ router.post('/', function(req, res){
     }
     res.json({result: 1});
   });
-
 });
 
 router.get('/:userid', function(req, res, next){
@@ -40,12 +41,6 @@ router.get('/:userid', function(req, res, next){
     }
     res.json(user);
   });
-  // console.log(req.params._id);
-  // if(req.params._id === '1234'){
-  //   res.send({ status: 1, userid: 'AAAA', name: 'ㅁㄴㅇ'});
-  // }else{
-  //   res.send({ status: 0 });
-  // }
 });
 
 
