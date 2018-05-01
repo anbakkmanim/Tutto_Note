@@ -4,6 +4,7 @@
 
 // 모듈 불러오기
 const express = require('express');
+const session = require('express-session');
 const createError = require('http-errors');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -19,6 +20,7 @@ let usersRouter = require('./routes/users');
 
 let app = express();
 
+
 // MongoDB 연결
 let db = mongoose.connection;
 db.on('error', console.error);
@@ -31,6 +33,11 @@ mongoose.connect(mongo_dest);
 app.use(logger('dev'));
 
 app.use(cookieParser());
+app.use(session({
+  secret: '@#@$MYSIGN#@$#$',
+  resave: false,
+  saveUninitialized: true
+ }));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

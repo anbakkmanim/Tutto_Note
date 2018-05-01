@@ -20,6 +20,44 @@ router.get('/', (req, res, next) => {
   });
 });
 
+// Test Session
+router.get('/test', (req, res, next) =>{
+  sess = req.session;
+  if (sess) {
+    res.end(sess.name+","+sess.userid);
+  }
+});
+
+// Logout(Session.destroy test)
+router.get('/logout', (req, res, next) =>{
+  req.session.destroy((err)=>{
+    // session 제거
+  });
+  res.end('세션 제거 완료');
+});
+
+// /users/login POST(body: userid,name,password) Login(Save Session)
+router.post('/login', (req, res, next) =>{
+  var sess;
+  var id = req.body.userid;
+  var name = req.body.name;
+  var pw = req.body.password;
+
+  Users.findOne({userid: id,password: pw},(err, user) => {
+    if (err) {
+      return res.status(500).json({status: 0});
+    }
+    if (!user) {
+      return res.status(404).end('로그인 실패');
+    }
+    
+  sess = req.session;
+  sess.userid = id;
+  sess.name = name;
+  res.end('로그인성공');
+  });
+});
+
 // /users POST (body: userid, name, password)
 router.post('/', (req, res, next) => {
   var users = new Users();
