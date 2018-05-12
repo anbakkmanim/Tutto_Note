@@ -10,7 +10,6 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const path = require('path');
 
 // 원격지 관련 기본 세팅
 const mongo_dest = 'mongodb://115.68.24.158:27017/tuttonote';
@@ -18,7 +17,6 @@ const mongo_dest = 'mongodb://115.68.24.158:27017/tuttonote';
 // 라우터 정의
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
-let notesRouter = require('./routes/notes');
 
 let app = express();
 
@@ -36,7 +34,7 @@ app.use(logger('dev'));
 
 app.use(cookieParser());
 app.use(session({
-  secret: 'e@%ydxGI&^64*',
+  secret: '@#@$MYSIGN#@$#$',
   resave: false,
   saveUninitialized: true
  }));
@@ -44,11 +42,8 @@ app.use(session({
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname + '/public')));
-
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/notes', notesRouter);
 
 // 정의되지 않은 접속에 404 보내기
 app.use((req, res, next) => {
