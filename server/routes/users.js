@@ -20,73 +20,73 @@ router.get('/', (req, res, next) => {
   });
 });
 
-// Test Session
-router.get('/test', (req, res, next) =>{
-  sess = req.session;
-  if (sess) {
-    res.end(sess.name+","+sess.userid);
-  }
-});
-
 // Logout(Session.destroy test)
 router.get('/logout', (req, res, next) =>{
-  if(!req.session.userid){
-    res.end('로그인 되지않음');
-  }else{
-    req.session.destroy((err)=>{
-      // session 제거
-    });
-    res.end('세션 제거 완료');
-  }
+  req.session.destroy((err)=>{
+    // session 제거
+  });
+  res.json({result : 0});
 });
 
 // /users/login POST(body: userid,name,password) Login(Save Session)
 router.post('/login', (req, res, next) =>{
   var sess;
   var id = req.body.userid;
-  var name = req.body.name;
   var pw = req.body.password;
 
-  Users.findOne({userid: id,password: pw},(err, user) => {
+  Users.findOne({userid: id},(err, user) => {
     if (err) {
-      return res.status(500).json({status: 0});
+      return res.status(500).json({status: 3});
     }
     if (!user) {
-      return res.status(404).end('로그인 실패');
+      return res.status(404).json({result : 2});
     }
-    
-  sess = req.session;
-  sess.userid = id;
-  sess.name = name;
-  res.end('로그인성공');
+    Users.findOne({userid: id,password: pw},(err, user) =>{
+      if (err) {
+        return res.status(500).json({status: 3});
+      }
+      if (!user) {
+        return res.status(404).json({result : 1});
+      }
+      sess = req.session;
+      sess.userid = id;
+      sess.name = user.name;
+      res.json({result : 0});
+    });
   });
 });
 
-// /users POST (body: userid, name, password) Register
+// /users POST (body: userid, name, password)
 router.post('/', (req, res, next) => {
   var users = new Users();
   users.userid = req.body.userid;
   users.name = req.body.name;
   users.password = req.body.password;
 
-  users.save((err) => {
-    if (err) {
-      console.error(err);
-      res.json({result: 0});
-      return;
+  Users.findOne({userid: id},(err, user) => {
+    if(!user){
+      users.save((err) => {
+        if (err) {
+          console.error(err);
+          res.json({result: 3});
+          return;
+        }
+        res.json({result: 0});
+      });
+    }else{
+      res.json({result: 1})
     }
-    res.json({result: 1});
   });
 });
 
-// /users/:userid GET 
+// /users/:userid GET
 router.get('/:userid', (req, res, next) => {
   Users.findOne({userid: req.params.userid}, (err, user) => {
     if (err) {
-      return res.status(500).json({status: 0});
+      return res.status(500).json({status: 3});
     }
     if (!user) {
-      return res.status(404).json({status: 0});
+      return res.status(404).json({status: 1});
     }
     res.json(user);
   });

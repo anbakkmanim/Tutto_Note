@@ -20,7 +20,6 @@ var userSchema = new Schema({
         path: String,
         name: String,
     },
-    myNote: [{type: Schema.Types.ObjectId, ref: 'note'}]
 });
 
 // users 라는 이름으로 스키마 내보내기
