@@ -30,10 +30,14 @@ router.get('/test', (req, res, next) =>{
 
 // Logout(Session.destroy test)
 router.get('/logout', (req, res, next) =>{
-  req.session.destroy((err)=>{
-    // session 제거
-  });
-  res.end('세션 제거 완료');
+  if(!req.session.userid){
+    res.end('로그인 되지않음');
+  }else{
+    req.session.destroy((err)=>{
+      // session 제거
+    });
+    res.end('세션 제거 완료');
+  }
 });
 
 // /users/login POST(body: userid,name,password) Login(Save Session)
@@ -58,7 +62,7 @@ router.post('/login', (req, res, next) =>{
   });
 });
 
-// /users POST (body: userid, name, password)
+// /users POST (body: userid, name, password) Register
 router.post('/', (req, res, next) => {
   var users = new Users();
   users.userid = req.body.userid;
@@ -75,7 +79,7 @@ router.post('/', (req, res, next) => {
   });
 });
 
-// /users/:userid GET
+// /users/:userid GET 
 router.get('/:userid', (req, res, next) => {
   Users.findOne({userid: req.params.userid}, (err, user) => {
     if (err) {
