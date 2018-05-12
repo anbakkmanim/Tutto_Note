@@ -6,21 +6,21 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // 스키마 정의
-let userSchema = new Schema({
+var userSchema = new Schema({
     userid: String ,
     name: String ,
     password: String ,
 
-    // history: {
-    //     title: String[],
-    //     tag: String[],
-    //     date: Date[],
-    // },
-
-    // user_icon: {
-    //     path: String,
-    //     name: String,
-    // },
+    history: {
+        title : [String],
+        tag: [String],
+        date: [Date],
+    },
+    user_icon: {
+        path: String,
+        name: String,
+    },
+    myNote: [{type: Schema.Types.ObjectId, ref: 'note'}]
 });
 
 // users 라는 이름으로 스키마 내보내기
