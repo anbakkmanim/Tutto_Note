@@ -56,6 +56,8 @@ router.post('/login', (req, res, next) =>{
   });
 });
 
+<<<<<<< HEAD
+=======
 // /users POST (body: userid, name, password)
 router.post('/', (req, res, next) => {
   var users = new Users();
@@ -93,4 +95,5 @@ router.get('/:userid', (req, res, next) => {
 });
 
 // 라우터 내보내기
+>>>>>>> 829da4df431d9c66e74cac16bf6be243702b9324
 module.exports = router;
