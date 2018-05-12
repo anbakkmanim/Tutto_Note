@@ -40,21 +40,27 @@ router.get('/logout', (req, res, next) =>{
 router.post('/login', (req, res, next) =>{
   var sess;
   var id = req.body.userid;
-  var name = req.body.name;
   var pw = req.body.password;
 
-  Users.findOne({userid: id,password: pw},(err, user) => {
+  Users.findOne({userid: id},(err, user) => {
     if (err) {
-      return res.status(500).json({status: 0});
+      return res.status(500).json({status: 3});
     }
     if (!user) {
-      return res.status(404).end('로그인 실패');
+      return res.status(404).json({result : 2});
     }
-    
-  sess = req.session;
-  sess.userid = id;
-  sess.name = name;
-  res.end('로그인성공');
+    Users.findOne({userid: id,password: pw},(err, user) =>{
+      if (err) {
+        return res.status(500).json({status: 3});
+      }
+      if (!user) {
+        return res.status(404).json({result : 1});
+      }
+      sess = req.session;
+      sess.userid = id;
+      sess.name = user.name;
+      res.json({result : 0});
+    });
   });
 });
 

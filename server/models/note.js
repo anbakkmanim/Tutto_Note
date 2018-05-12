@@ -6,20 +6,20 @@ let noteSchema = new Schema({
     content: String,
     file: [{
         path: String,
-        name: String
+        original_name: String
     }],
-    status: Boolean,
+    enable: {type: Boolean, default: true},
     tags: [String],
     start_date: Date,
     end_date: Date,
-    create_date: Date,
-    modify_date: Date,
+    create_date: {type: Date, default: Date.now},
+    modify_date: {type: Date, default: Date.now},
     popup: {
-        x: Number,
-        y: Number,
-        width: Number,
-        height: Number,
-        is_opened: Boolean,
+        x: {type: Number, default: 0},
+        y: {type: Number, default: 0},  
+        width: {type: Number, default: 200},
+        height: {type: Number, default: 200},
+        is_opened: {type: Boolean, default: false},
     },
 });
 

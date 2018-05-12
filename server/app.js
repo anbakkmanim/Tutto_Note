@@ -17,7 +17,7 @@ const mongo_dest = 'mongodb://115.68.24.158:27017/tuttonote';
 // 라우터 정의
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
-
+let noteRouter = require('./routes/note');
 let app = express();
 
 
@@ -44,6 +44,7 @@ app.use(bodyParser.json());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/note', noteRouter);
 
 // 정의되지 않은 접속에 404 보내기
 app.use((req, res, next) => {
