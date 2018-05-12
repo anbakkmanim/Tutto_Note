@@ -63,7 +63,7 @@ router.post('/', (req, res, next) => {
   users.name = req.body.name;
   users.password = req.body.password;
 
-  Users.findOne({userid: id},(err, user) => {
+  Users.findOne({userid: req.body.userid},(err, user) => {
     if(!user){
       users.save((err) => {
         if (err) {
