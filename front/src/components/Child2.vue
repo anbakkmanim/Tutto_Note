@@ -13,6 +13,8 @@
     <br>
     <router-link to="/child1">To Child1 Component</router-link>
     <br>
+    <router-link to="/child3">To Child3 Component</router-link>
+    <br>
     <router-link to="/">To Home</router-link>
   </div>
 </template>

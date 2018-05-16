@@ -5,8 +5,11 @@ import Home from './../components/Home'
 
 import Child1 from './../components/Child1'
 import Child2 from './../components/Child2'
+import Child3 from './../components/Child3'
 
 import NoteList from './../components/NoteList'
+import Login from './../components/Login'
+
 import ViewTest from './../components/ViewTest'
 
 Vue.use(VueRouter);
@@ -27,6 +30,11 @@ let routes = [
         path: '/child2',
         name: 'Child2',
         component: Child2
+      },
+      {
+        path: '/child3',
+        name: 'Child3',
+        component: Child3
       }
     ]
   },
@@ -34,6 +42,11 @@ let routes = [
     path: '/notes',
     name: 'NoteList',
     component: NoteList
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
   },
   // [!! VIEW TEST ROUTER !!]
   {
