@@ -8,7 +8,7 @@ let noteSchema = new Schema({
         path: String,
         original_name: String
     }],
-    author: {type:Schema.Types.ObjectId, ref: 'users'},
+    author: {type: Schema.Types.ObjectId, ref: 'users'},
     enable: {type: Boolean, default: true},
     tags: [String],
     start_date: Date,
