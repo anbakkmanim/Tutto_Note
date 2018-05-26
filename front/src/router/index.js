@@ -9,6 +9,7 @@ import Child3 from './../components/Child3'
 
 import NoteList from './../components/NoteList'
 import Login from './../components/Login'
+import List from './../components/List'
 
 import ViewTest from './../components/ViewTest'
 
@@ -47,6 +48,11 @@ let routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/list',
+    name: 'List',
+    component: List
   },
   // [!! VIEW TEST ROUTER !!]
   {
