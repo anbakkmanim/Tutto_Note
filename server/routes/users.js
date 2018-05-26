@@ -8,18 +8,6 @@ let router = express.Router();
 // Users 모델 불러오기
 const Users = require('../models/users');
 
-// /users GET
-router.get('/', (req, res, next) => {
-  Users.find((err, result) => {
-    if (err) {
-      console.error(err);
-      res.json({result: 0});
-      return;
-    }
-    res.json(result);
-  });
-});
-
 // Logout(Session.destroy test)
 router.get('/logout', (req, res, next) =>{
   req.session.destroy((err)=>{
@@ -49,7 +37,7 @@ router.post('/login', (req, res, next) =>{
         return res.status(404).json({result : 1});
       }
       sess = req.session;
-      sess.userid = id;
+      sess._id = user._id;
       sess.name = user.name;
       res.json({result : 0});
     });
@@ -67,14 +55,12 @@ router.post('/', (req, res, next) => {
     if(!user){
       users.save((err) => {
         if (err) {
-          console.error(err);
-          res.json({result: 3});
-          return;
+          return res.status(500).json({status: 3});
         }
         res.json({result: 0});
       });
     }else{
-      res.json({result: 1})
+      res.json({result: 1});
     }
   });
 });
