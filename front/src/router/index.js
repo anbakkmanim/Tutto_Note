@@ -13,6 +13,9 @@ import List from './../components/List'
 
 import ViewTest from './../components/ViewTest'
 
+import ListDetail from './../components/ListDetail'
+
+
 Vue.use(VueRouter);
 
 // 라우트 정의
@@ -59,6 +62,11 @@ let routes = [
     path: '/viewtest',
     name: 'ViewTest',
     component: ViewTest
+  },
+  {
+    path: '/ListDetail',
+    name: 'ListDetail',
+    component: ListDetail
   }
 ];
 
