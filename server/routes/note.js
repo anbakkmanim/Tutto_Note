@@ -17,8 +17,8 @@ function remove(id) {
     return 0;
 }
 
-router.get('/', (req, res, next) => {
-    Note.find({author: req.session._id, enable : true},(err, notes) => {
+router.get('/author/:_id', (req, res, next) => {
+    Note.find({author: req.params._id, enable : true},(err, notes) => {
         if (err) return res.status(500).res.json({result: 3});
         res.json(notes);
     }).sort({modify_date : -1});
