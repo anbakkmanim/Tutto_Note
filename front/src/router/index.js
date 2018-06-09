@@ -39,6 +39,16 @@ let routes = [
         path: '/child3',
         name: 'Child3',
         component: Child3
+      },
+      {
+        path:'',
+        name:'list',
+        component: List
+      },
+      {
+        path:'/listdetail',
+        name:'ListDetail',
+        component:ListDetail
       }
     ]
   },
@@ -64,7 +74,7 @@ let routes = [
     component: ViewTest
   },
   {
-    path: '/ListDetail',
+    path: '/note/:_id',
     name: 'ListDetail',
     component: ListDetail
   },
@@ -77,7 +87,7 @@ let routes = [
     path:'/sidebar',
     name:'sidebar',
     component:sidebar
-  }
+  },
 ];
 
 export default new VueRouter({

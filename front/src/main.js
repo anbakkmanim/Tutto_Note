@@ -7,9 +7,7 @@ import App from './App.vue'
 import axios from 'axios'
 // vue-session
 import VueSession from 'vue-session'
-// Materialize
-import "./css/materialize.scss"
-import "./js/bin/materialize.min.js"
+//import { VueEditor } from 'vue2-editor'
 
 // 라우터
 import router from './router'

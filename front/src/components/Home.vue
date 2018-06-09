@@ -9,14 +9,20 @@
 
 <template>
   <div class="Home">
-    Tutto Note에 오신 것을 환영합니다!
-    <router-view />
+    <Sidebar class="sidebar" />
+    <router-view class="content"></router-view>
+    <!--<List class="content"/>-->
   </div>
 </template>
 
 <script>
+
+import Sidebar from "./Sidebar";
+import List from "./List";
+
 export default {
   name: 'Home',
+  components: { Sidebar, List },
   data() {
     return {
 
@@ -26,5 +32,15 @@ export default {
 </script>
 
 <style lang="scss">
+.sidebar {
+  position: fixed;
+  width: 20em;
+  height: 100%;
+  border-right: 1px solid #dddddd;
+}
+.content {
+  margin-left: 20em;
+  padding: 2em;
+}
 
 </style>
