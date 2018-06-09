@@ -7,10 +7,10 @@ import Child1 from './../components/Child1'
 import Child2 from './../components/Child2'
 import Child3 from './../components/Child3'
 
+import sidebar from './../components/sidebar'
 import NoteList from './../components/NoteList'
 import Login from './../components/Login'
 import List from './../components/List'
-
 import ViewTest from './../components/ViewTest'
 
 import ListDetail from './../components/ListDetail'
@@ -67,6 +67,16 @@ let routes = [
     path: '/ListDetail',
     name: 'ListDetail',
     component: ListDetail
+  },
+  {
+    path:'/list',
+    name:'list',
+    component:List
+  },
+  {
+    path:'/sidebar',
+    name:'sidebar',
+    component:sidebar
   }
 ];
 
