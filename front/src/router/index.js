@@ -5,9 +5,16 @@ import Home from './../components/Home'
 
 import Child1 from './../components/Child1'
 import Child2 from './../components/Child2'
+import Child3 from './../components/Child3'
 
+import sidebar from './../components/sidebar'
 import NoteList from './../components/NoteList'
+import Login from './../components/Login'
+import List from './../components/List'
 import ViewTest from './../components/ViewTest'
+
+import ListDetail from './../components/ListDetail'
+
 
 Vue.use(VueRouter);
 
@@ -27,6 +34,21 @@ let routes = [
         path: '/child2',
         name: 'Child2',
         component: Child2
+      },
+      {
+        path: '/child3',
+        name: 'Child3',
+        component: Child3
+      },
+      {
+        path:'',
+        name:'list',
+        component: List
+      },
+      {
+        path:'/listdetail',
+        name:'ListDetail',
+        component:ListDetail
       }
     ]
   },
@@ -35,12 +57,37 @@ let routes = [
     name: 'NoteList',
     component: NoteList
   },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/list',
+    name: 'List',
+    component: List
+  },
   // [!! VIEW TEST ROUTER !!]
   {
     path: '/viewtest',
     name: 'ViewTest',
     component: ViewTest
-  }
+  },
+  {
+    path: '/note/:_id',
+    name: 'ListDetail',
+    component: ListDetail
+  },
+  {
+    path:'/list',
+    name:'list',
+    component:List
+  },
+  {
+    path:'/sidebar',
+    name:'sidebar',
+    component:sidebar
+  },
 ];
 
 export default new VueRouter({

@@ -41,8 +41,8 @@ router.post('/login', (req, res, next) =>{
       sess.name = user.name;
       res.json({
         result : 0,
-        _id : sess._id,
-        name : sess.name
+        _id: sess._id,
+        name: sess.name
       });
     });
   });

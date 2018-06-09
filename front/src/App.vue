@@ -82,6 +82,9 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+* {
+  box-sizing: border-box;
+}
 
 // End of Eric Meyer's CSS Reset
 

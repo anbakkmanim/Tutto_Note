@@ -49,6 +49,14 @@ router.get('/author/:_id', (req, res, next) => {
     }).sort({modify_date : -1});
 });
 
+router.get('/:_id', (req, res, next) => {
+    Note.findOne({_id: req.params._id}, (err, note) => {
+        if (err) return res.status(500).json({result: 3});
+        res.json(note);
+    });
+});
+
+
 router.put('/:_id', (req, res, next) => {
     Note.update({ _id: req.params._id }, { $set: req.body }, function(err, note){
         if(err) res.status(500).json({result : 3});

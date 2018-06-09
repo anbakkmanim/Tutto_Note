@@ -17,16 +17,21 @@
       <h1>NoteList.vue 미리보기</h1>
       <NoteList />
     </div>
+    <div class="ViewTestElem">
+      <h1>Login.vue 미리보기</h1>
+      <Login />
+    </div>
   </div>
 </template>
 
 <script>
 
 import NoteList from './NoteList'
+import Login from './Login'
 
 export default {
   name: 'ViewTest',
-  components: { NoteList },
+  components: { NoteList, Login },
   data() {
     return {
 
