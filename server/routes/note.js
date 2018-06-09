@@ -17,8 +17,33 @@ function remove(id) {
     return 0;
 }
 
-router.get('/', (req, res, next) => {
-    Note.find({author: req.session._id, enable : true},(err, notes) => {
+router.get('/search/title', (req, res, next) => {
+    let title = req.body.title;
+    let author = req.body._id;
+    Note.find( {title: { $regex: ".*"+title+".*" }, author: author, enable : true}, (err, notes) => {
+        if(err) return res.status(500).json({result: 3});
+        res.json(notes);
+    });
+});
+
+router.get('/search/date/:_id', (req, res, next) => {
+    var start = req.body.start;
+    var end  = req.body.end;
+    var created = req.body.created;
+
+    console.log(start+"/"+end+"/"+created);
+    if(!created){
+        res.json({result : 1});
+    }else{
+        Note.find({create_date: created, enable : true}, (err, notes) => {
+            if(err) return res.status(500).res.json({result: 3});
+            res.json(notes);
+        });
+    }
+});
+
+router.get('/author/:_id', (req, res, next) => {
+    Note.find({author: req.params._id, enable : true}, (err, notes) => {
         if (err) return res.status(500).res.json({result: 3});
         res.json(notes);
     }).sort({modify_date : -1});
@@ -60,17 +85,19 @@ router.post('/delete', (req, res, next) => {
 
 router.post('/', (req, res, next) =>{
     var notes = new Note();
-    notes.author = req.session._id;
+    notes.author = req.body._id;
     notes.title = req.body.title;
     notes.content = req.body.content;
     notes.start_date = req.body.start_date;
     notes.end_date = req.body.end_date;
+    notes.create_date = new Date().toString();
+    notes.modify_date = new Date().toString();
 
-    if(req.body._id.constructor === Array){
+    if(req.body.tags.constructor === Array){
         for (let index = 0; index < req.body.tags.length; index++) {
             notes.tags[index] = req.body.tags[index];
         }
-    } else{
+    } else {
         notes.tags[0] = req.body.tags;
     }
     

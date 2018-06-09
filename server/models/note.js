@@ -13,8 +13,8 @@ let noteSchema = new Schema({
     tags: [String],
     start_date: Date,
     end_date: Date,
-    create_date: {type: Date, default: Date.now},
-    modify_date: {type: Date, default: Date.now},
+    create_date: {type: Date},
+    modify_date: {type: Date},
     popup: {
         x: {type: Number, default: 0},
         y: {type: Number, default: 0},  
