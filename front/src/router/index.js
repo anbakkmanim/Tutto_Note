@@ -14,6 +14,7 @@ import List from './../components/List'
 import ViewTest from './../components/ViewTest'
 
 import ListDetail from './../components/ListDetail'
+import Search from './../components/Search'
 
 
 Vue.use(VueRouter);
@@ -88,6 +89,11 @@ let routes = [
     name:'sidebar',
     component:sidebar
   },
+  {
+    path:'/search',
+    name:'Search',
+    component:Search
+  }
 ];
 
 export default new VueRouter({
