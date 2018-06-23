@@ -17,12 +17,14 @@ function remove(id) {
     return 0;
 }
 
+// /search/title/:title
 router.get('/search/title', (req, res, next) => {
-    let title = req.body.title;
-    let author = req.body._id;
+    let title = req.query.title;
+    let author = req.query._id;
+    console.log(title);
     Note.find( {title: { $regex: ".*"+title+".*" }, author: author, enable : true}, (err, notes) => {
-        if(err) return res.status(500).json({result: 3});
-        res.json(notes);
+        if(err) return res.status(404).json({result: 3});
+        res.status(200).json(notes);
     });
 });
 
@@ -101,13 +103,13 @@ router.post('/', (req, res, next) =>{
     notes.create_date = new Date().toString();
     notes.modify_date = new Date().toString();
 
-    if(req.body.tags.constructor === Array){
-        for (let index = 0; index < req.body.tags.length; index++) {
-            notes.tags[index] = req.body.tags[index];
-        }
-    } else {
-        notes.tags[0] = req.body.tags;
-    }
+    // if(req.body.tags.constructor === Array){
+    //     for (let index = 0; index < req.body.tags.length; index++) {
+    //         notes.tags[index] = req.body.tags[index];
+    //     }
+    // } else {
+    //     notes.tags[0] = req.body.tags;
+    // }
     
     notes.save((err) => {
         if(err) res.status(500).json({result : 3});
