@@ -46,12 +46,19 @@ router.get('/search/date/:_id', (req, res, next) => {
 router.post('/search/tags', (req, res, next)=>{
     let tags = req.body.tags;
     let author = req.body._id;
-
+    
 
 })
 
 router.get('/author/:_id', (req, res, next) => {
-    Note.find({author: req.params._id}, (err, notes) => {
+    Note.find({author: req.params._id, enable: true}, (err, notes) => {
+        if (err) return res.status(500).res.json({result: 3});
+        res.json(notes);
+    }).sort({modify_date : -1});
+});
+
+router.get('/author/trash/:_id', (req, res, next) => {
+    Note.find({author: req.params._id, enable: false}, (err, notes) => {
         if (err) return res.status(500).res.json({result: 3});
         res.json(notes);
     }).sort({modify_date : -1});
