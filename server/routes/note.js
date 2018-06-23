@@ -43,12 +43,12 @@ router.get('/search/date/:_id', (req, res, next) => {
     }
 });
 
-router.post('/search/tags', (req, res, next)=>{
-    let tags = req.body.tags;
-    let author = req.body._id;
+// router.post('/search/tags', (req, res, next)=>{
+//     let tags = req.body.tags;
+//     let author = req.body._id;
     
 
-})
+// });
 
 router.get('/author/:_id', (req, res, next) => {
     Note.find({author: req.params._id, enable: true}, (err, notes) => {
@@ -78,6 +78,20 @@ router.put('/:_id', (req, res, next) => {
         if(!note) return res.status(404).json({result : 1});
         res.json({result : 0});
     })
+});
+
+// _id 배열 들어올 때 전부 데이터 변경
+router.put('/update/array', (req, res, next) => {
+
+    let arr = req.body.array;
+
+    arr.forEach(el => {
+        Note.update({ _id: el }, { $set: req.body }, function(err, note){
+            if(err) res.status(500).json({result : 3});
+            if(!note) return res.status(404).json({result : 1});
+        })
+    });
+    res.status(200).json({result : 0});
 });
 
 router.delete('/delete/:_id', (req, res, next) => {
