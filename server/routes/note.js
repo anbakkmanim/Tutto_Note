@@ -105,7 +105,7 @@ router.delete('/delete', (req, res, next) => {
 
     let arr = req.body.array;
 
-    arr.forEach(el => {
+    arr.forEach((el) => {
         if(remove(req.body._id) == 1){
             res.status(404).json({result : 3});
         }
