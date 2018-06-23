@@ -58,12 +58,15 @@ export default {
 			}
     },
     removeSelect() {
+      console.log(this.notelist)
       this.$http.delete(`http://localhost:3000/note/delete`, {
-        array: this.notelist
+        data: {
+          array: this.notelist
+        }
       })
       .then(res => {
         alert('없다');
-        this.$router.push({path:'/'});
+        this.$router.push({path:'/trash'});
       })
       .catch(err => {
         console.err(err);
