@@ -15,7 +15,7 @@
     <quill-editor v-model="content"></quill-editor> -->
     <!--<input type="button" name="input" value="확인"> -->
     <button v-on:click="submit()">확인</button>
-    <router-link to="/" tag="button" v-on:click="remove()">삭제</router-link>
+    <button v-on:click="remove()">삭제</button>
     <router-link to="/" tag="button">취소</router-link>
     </div>
   </div>
@@ -44,7 +44,6 @@ export default {
   },
 
   created() {
-    console.log();
     if (this.$route.params._id) {
       this.$http.get("http://localhost:3000/note/" + this.$route.params._id)
       .then(res => {
@@ -86,27 +85,27 @@ export default {
           end_date: this.end_date,
           author: this.$session.get("_id")
         }).then(res => {
-          console.log(res);
           alert("글 작성 성공");
           this.$router.push({path: '/'});
         })
         .catch(err => {
-          console.log(err);
           alert("글작성 실패");
         });
       }
     },
     remove(){
-      this.$http.delete("http://localhost:3000/note/" + this.$route.params._id)
+      this.$http.put("http://localhost:3000/note/" + this.$route.params._id, {
+        enable: false
+      })
       .then(res => {
-
+        alert('휴지통 ㅂㅂ');
+        this.$router.push({path: '/'});
       })
       .catch(err => {
-
+        console.log(err);
+        alert('글작성 실패');
       });
     },
-
-
   },
   components:{
     VueEditor,

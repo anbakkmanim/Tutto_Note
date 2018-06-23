@@ -50,7 +50,12 @@ let routes = [
         path:'/listdetail',
         name:'ListDetail',
         component:ListDetail
-      }
+      },
+      {
+        path:'/search',
+        name:'Search',
+        component:Search
+      },
     ]
   },
   {
@@ -89,11 +94,7 @@ let routes = [
     name:'sidebar',
     component:sidebar
   },
-  {
-    path:'/search',
-    name:'Search',
-    component:Search
-  }
+
 ];
 
 export default new VueRouter({

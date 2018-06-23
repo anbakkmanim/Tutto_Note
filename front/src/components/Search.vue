@@ -53,6 +53,7 @@ export default {
       this.$http.get(`http://localhost:3000/note/search/title?title=${this.searchWord}&_id=${this.$session.get('_id')}`)
       .then(res => {
         this.notes = res.data;
+        console.log(this.notes.length)
       })
       .catch(err => {
         console.err(err);
