@@ -106,9 +106,10 @@ router.delete('/delete', (req, res, next) => {
     let arr = req.body.array;
 
     arr.forEach((el) => {
-        if(remove(req.body._id) == 1){
-            res.status(404).json({result : 3});
-        }
+        Note.deleteOne({_id: el}, (err, note) => {
+            if(err) res.status(500).json({result : 3});
+            if(!note) return res.status(404).json({result : 1});
+        })
     });
     res.json({result : 0});
 });
