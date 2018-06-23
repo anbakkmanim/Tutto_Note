@@ -5,10 +5,11 @@
     <input type="date" name="start_date" v-model="start_date">
     <span> ~ </span>
     <input type="date" name="end_date" v-model="end_date"> <br><br>
-    <textarea v-model="content" rows="18" placeholder="메모"/><br><br>
+    <!-- <textarea v-model="content" rows="18" placeholder="메모"/><br><br> -->
 
     <textarea name="tags"  rows="2" placeholder="#태그"></textarea><br><br>
-    
+    <vue-editor v-model="content"></vue-editor>
+    <quill-editor v-model="content"></quill-editor>
     <!--<input type="button" name="input" value="확인"> -->
     <button v-on:click="submit()">확인</button>
     <router-link to="/" tag="button" v-on:click="remove()">삭제</router-link>
@@ -18,12 +19,16 @@
 
 <script> 
 
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+import {VueEditor} from 'vue2-editor'
+import { quillEditor } from 'vue-quill-editor'
 
 export default {
 
-
-
-  name: 'ListDetail',
+   name: 'ListDetail',
   data(){
     return{
       title: "",
@@ -95,9 +100,14 @@ export default {
       .catch(err => {
 
       });
-    }
+    },
 
-  }
+
+  },
+  components:{
+    VueEditor,
+    quillEditor
+  },
   
   
 }
