@@ -40,6 +40,9 @@ export default {
       .then(res => {
         this.title = res.data.title;
         this.content = res.data.content;
+        
+        this.start_date=res.data.start_date.substring(0,10);
+        this.end_date=res.data.end_date.substring(0,10);
       })
       .catch(err => {
 
@@ -70,8 +73,9 @@ export default {
           title: this.title,
           content: this.content,
           start_date: this.start_date,
+          
           end_date: this.end_date,
-          author: '5b1b6c4087145c6624a7d131'
+          author: this.$session.get("_id")
         }).then(res => {
           console.log(res);
           alert("글 작성 성공");
