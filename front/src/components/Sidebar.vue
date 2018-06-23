@@ -6,7 +6,7 @@
       <li id="user"><span>{{userName}}</span></li>
       <ul>
         <router-link to="/" tag="li">홈</router-link>
-        <li>검색</li>
+        <router-link to="/search" tag="li">검색</router-link>
         <li>캘린더</li>
       </ul>
       <ul style="padding-top:120px;">

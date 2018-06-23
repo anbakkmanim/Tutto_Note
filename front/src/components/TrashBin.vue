@@ -78,7 +78,7 @@ a{
   position: fixed;
   width: 100%;
   height: 8em;
-  bottom: 0; 
+  bottom: 0;
   left: 20em;
   background-color: #fff;
   border: 1px solid #dddddd;
