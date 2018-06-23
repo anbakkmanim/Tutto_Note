@@ -93,7 +93,7 @@ router.post('/delete', (req, res, next) => {
 
 router.post('/', (req, res, next) =>{
     var notes = new Note();
-    notes.author = req.body._id;
+    notes.author = req.body.author;
     notes.title = req.body.title;
     notes.content = req.body.content;
     notes.start_date = req.body.start_date;
