@@ -1,20 +1,27 @@
 <template>
   <div>
     <p style="font-size:22pt;">HOME</p>
+     <div style="padding-left:30px"><input type="checkbox" v-model="allselect" id="a1b2c3" @click="selectAll"><label>전체선택</label></div>
     <ul>
-      <router-link :to="'/note/' + note._id" v-for="(note, index) in notes" :key="index" tag="li">
+      <!-- <router-link :to="'/note/' + note._id" v-for="(note, index) in notes" :key="index" tag="li">
         <input type="checkbox" v-bind:value="note.title" v-model="notelist">
         <label>{{note.title}}</label>
         <p>{{note.content}}</p>
          <hr>
-      </router-link>
+      </router-link> -->
+      <li v-for="(note, index) in notes" :key="index">
+        <input type="checkbox" v-bind:value="note._id" v-model="notelist">
+        <router-link :to="'/note/' + note._id" tag="label">{{note.title}}</router-link>
+        <p>{{note.content}}</p>
+         <hr>
+      </li>
     </ul>
     <div v-if="notelist.length > 0" class="select">
       <div>
-        <input type="checkbox" v-model="allselect" id="a1b2c3" @click="selectAll">
+        
         <label for="a1b2c3">{{notelist.length}} 개 선택</label>
       </div>
-      <div class="button">수정</div>
+        <button class="but" v-on:click="gotrash()">휴지통</button>
     </div>
   </div>
 </template>
@@ -26,7 +33,8 @@ export default {
       notes: [],
       checknote: [],
       notelist : [],
-      noteid: ""
+      noteid: "",
+      allselect:false
     }
   },
   created() {
@@ -42,11 +50,31 @@ export default {
     }
   },
   methods:{
-    selectAll: function() {
-      for (note in this.notes) {
-        this.notelist = true;              
-      }
+    selectItem(_id) {
+      this.notelist.push(_id);
     },
+    selectAll() {
+			this.notelist = [];
+			if (!this.allselect) {
+				for (let note in this.notes) {
+					this.notelist.push(this.notes[note]._id);
+				}
+			}
+    },
+    gotrash(){
+      this.$http.put(`http://localhost:3000/note/update/array`, {
+        array: this.notelist,
+        enable: false
+      })
+      .then(res => {
+        console.log(this.notelist);
+        alert('휴지통ㅂㅂ');
+         this.$router.push({path: '/'});
+      })
+      .catch(err => {
+        console.err(err);
+      });
+    }
   }
 }
 </script>
@@ -92,5 +120,6 @@ a{
     float: left;
     padding: 50px;
   }
+
 }
 </style>

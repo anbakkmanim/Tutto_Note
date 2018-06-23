@@ -1,7 +1,7 @@
 <template>
   <div>
     <p style="font-size:22pt;">휴지통</p>
-    <input type="checkbox" v-model="allselect" id="a1b2c3" @click="selectAll">
+    <div style="padding-left:30px"><input type="checkbox" v-model="allselect" id="a1b2c3" @click="selectAll"><label>전체선택</label></div>
     <ul>
       <li v-for="(note, index) in notes" :key="index">
         <input type="checkbox" v-bind:value="note._id" v-model="notelist">
@@ -17,7 +17,6 @@
       </div>
         <button class="but" v-on:click="removeSelect()">완전삭제</button>
        <button class="but" v-on:click="recover()">복구</button>
-       <p>{{notelist}}</p>
     </div>
   </div>
 </template>
@@ -59,7 +58,16 @@ export default {
 			}
     },
     removeSelect() {
-
+      this.$http.delete(`http://localhost:3000/note/delete`, {
+        array: this.notelist
+      })
+      .then(res => {
+        alert('없다');
+        this.$router.push({path:'/'});
+      })
+      .catch(err => {
+        console.err(err);
+      });
     },
     recover() {
       // http://localhost:3000/note/update/array
