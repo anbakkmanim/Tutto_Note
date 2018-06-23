@@ -1,17 +1,35 @@
 <template>
   <div class="Search">
-    <div class="SearchBar">
-      <input placeholder="검색어를 입력하세요" v-model="searchWord" name="searchWord">
-      <button v-on:click="searchData()">검색</button>
+    <div class="Option">
+      <select v-model="Option">
+        <option value="Title" selected>제목으로 검색</option>
+        <option value="Tag">태그로 검색</option>
+        <option value="Date">일정으로 검색</option>
+      </select>
       최근 검색어 : {{searchWords}}
     </div>
-    <div class="Option">
-      <select name="Option" id="option">
-        <option value="Title">제목으로 검색</option>
-        <option value="Tag">태그으로 검색</option>
-        <option value="Plan">일정으로 검색</option>
-      </select>
+    <br>  
+    <div class="SearchBar" v-if="Option == 'Tag'">
+      <input type="text" v-model="input" placeholder="태그를 입력하세요">
+      <button v-on:click="add">태그추가</button>
+      <button v-on:click="searchData()" >검색</button>
+      <br>
+      <ul class="tags">
+        <li v-for="(tag, index) in tags" :key="index">
+          {{ tag }}
+          <a v-on:click="remove(index)">x</a>
+        </li>
+      </ul>
     </div>
+    <div class="SearchBar" v-else-if="Option == 'Date'">
+      <input type="date" v-model="Date" name="Date">
+      <button v-on:click="searchData()" >검색</button>
+    </div>
+    <div class="SearchBar" v-else>
+      <input placeholder="검색어를 입력하세요" v-model="searchWord" name="searchWord">
+      <button v-on:click="searchData()" >검색</button>
+    </div>
+    
     <div class="Array">
       <input type="radio" value="최신순"  name="array"> 최신순
       <input type="radio" value="생성순"  name="array"> 생성순
@@ -38,7 +56,9 @@ export default {
     return{
       searchWord: '',
       notes: [],
-      searchWords: ''
+      searchWords: '',
+      Option: '',
+      tags: [],
     }
   },
   created() {
@@ -57,6 +77,13 @@ export default {
       .catch(err => {
         console.err(err);
       })
+    },
+    add() {
+      this.tags.push(this.input);
+      this.input = "";
+    },
+    remove(index) {
+      this.tags.splice(index, 1);
     }
   }
   
@@ -85,7 +112,7 @@ export default {
 
   .SearchBar button{
     height: 35px;
-    width: 100px;
+    width: 120px;
     font-size: 22px;
     margin: 6px
   }
@@ -116,6 +143,14 @@ p{
 a{
   text-decoration: none;
   color: black;
+}
+.tags {
+  li {
+    display: inline-block;
+    padding: 7px;
+    margin-right: 3px;
+    background-color: #eee;
+  }
 }
 
 
