@@ -33,7 +33,7 @@ export default {
     this.$http.get(`http://localhost:3000/note/author/` + this.$session.get("_id"))
     .then(res => {
       console.log(this.$session.get("_id"));
-      this.notes = res.data;
+      this.notes = res.data; 
     })
   },
   computed: {

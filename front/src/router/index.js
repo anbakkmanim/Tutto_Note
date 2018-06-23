@@ -15,6 +15,7 @@ import ViewTest from './../components/ViewTest'
 
 import ListDetail from './../components/ListDetail'
 import Search from './../components/Search'
+import Trash from './../components/TrashBin'
 
 
 Vue.use(VueRouter);
@@ -46,16 +47,17 @@ let routes = [
         name:'list',
         component: List
       },
-      {
-        path:'/listdetail',
-        name:'ListDetail',
-        component:ListDetail
-      },
+      
       {
         path:'/search',
         name:'Search',
         component:Search
       },
+      {
+        path:'/trash',
+        name:'Trash',
+        component:Trash
+      }
     ]
   },
   {
@@ -93,6 +95,11 @@ let routes = [
     path:'/sidebar',
     name:'sidebar',
     component:sidebar
+  },
+  {
+    path:'/listdetail',
+    name:'ListDetail',
+    component:ListDetail
   },
 
 ];

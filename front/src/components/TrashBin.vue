@@ -1,36 +1,41 @@
 <template>
   <div>
-    <p style="font-size:22pt;">HOME</p>
+    <p style="font-size:22pt;">휴지통</p>
+    <input type="checkbox" v-model="allselect" id="a1b2c3" @click="selectAll">
     <ul>
-      <router-link :to="'/note/' + note._id" v-for="(note, index) in notes" :key="index" tag="li">
-        <input type="checkbox" v-bind:value="note.title" v-model="notelist">
-        <label>{{note.title}}</label>
+      <li v-for="(note, index) in notes" :key="index">
+        <input type="checkbox" v-bind:value="note._id" v-model="notelist">
+        <router-link :to="'/note/' + note._id" tag="label">{{note.title}}</router-link>
         <p>{{note.content}}</p>
          <hr>
-      </router-link>
+      </li>
     </ul>
     <div v-if="notelist.length > 0" class="select">
       <div>
-        <input type="checkbox" v-model="allselect" id="a1b2c3" @click="selectAll">
+        
         <label for="a1b2c3">{{notelist.length}} 개 선택</label>
       </div>
-      <div class="button">수정</div>
+        <button class="but" v-on:click="removeSelect()">완전삭제</button>
+       <button class="but" v-on:click="recover()">복구</button>
+       <p>{{notelist}}</p>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: 'List',
+  name: 'TrashBin',
   data() {
     return {
       notes: [],
       checknote: [],
       notelist : [],
-      noteid: ""
+      noteid: "",
+      allselect:false
     }
+    
   },
   created() {
-    this.$http.get(`http://localhost:3000/note/author/` + this.$session.get("_id"))
+    this.$http.get(`http://localhost:3000/note/author/trash/` + this.$session.get("_id"))
     .then(res => {
       console.log(this.$session.get("_id"));
       this.notes = res.data;
@@ -42,11 +47,35 @@ export default {
     }
   },
   methods:{
-    selectAll: function() {
-      for (note in this.notes) {
-        this.notelist = true;              
-      }
+    selectItem(_id) {
+      this.notelist.push(_id);
     },
+    selectAll() {
+			this.notelist = [];
+			if (!this.allselect) {
+				for (let note in this.notes) {
+					this.notelist.push(this.notes[note]._id);
+				}
+			}
+    },
+    removeSelect() {
+
+    },
+    recover() {
+      // http://localhost:3000/note/update/array
+      this.$http.put(`http://localhost:3000/note/update/array`, {
+        array: this.notelist,
+        enable: true
+      })
+      .then(res => {
+        console.log(this.notelist);
+        alert('다시가');
+         this.$router.push({path: '/'});
+      })
+      .catch(err => {
+        console.err(err);
+      });
+    }
   }
 }
 </script>
@@ -91,6 +120,9 @@ a{
   div{
     float: left;
     padding: 50px;
+  }
+  .but{
+    margin-top: 40px;
   }
 }
 </style>

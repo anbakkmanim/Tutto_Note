@@ -81,7 +81,6 @@ export default {
           title: this.title,
           content: this.content,
           start_date: this.start_date,
-          
           end_date: this.end_date,
           author: this.$session.get("_id")
         }).then(res => {

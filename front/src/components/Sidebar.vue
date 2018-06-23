@@ -10,7 +10,7 @@
         <li>캘린더</li>
       </ul>
       <ul style="padding-top:120px;">
-        <li>휴지통</li>
+        <router-link to="/trash" tag="li">휴지통</router-link>
         <router-link to="/listdetail" tag="li">메모작성</router-link>
       </ul>
     </div>
