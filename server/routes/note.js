@@ -101,23 +101,16 @@ router.delete('/delete/:_id', (req, res, next) => {
     res.json({result : 0});
 });
 
-router.post('/delete', (req, res, next) => {
-    let error = 0;
-    let Errorarray = new Array();
-    if(req.body._id.constructor === Array){
-        for(let index = 0 ; index < req.body._id.length ; index ++ ){
-            if(remove(req.body._id[index]) == 1){
-                error++;
-                Errorarray[Errorarray.length] = index;
-            }
-        }
-    } else {
+router.delete('/delete', (req, res, next) => {
+
+    let arr = req.body.array;
+
+    arr.forEach(el => {
         if(remove(req.body._id) == 1){
-            error++;
-            Errorarray[Errorarray.length] = 0;
+            res.status(404).json({result : 3});
         }
-    }
-    res.json({result : error,Errorarray});
+    });
+    res.json({result : 0});
 });
 
 router.post('/', (req, res, next) =>{
