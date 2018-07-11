@@ -43,12 +43,15 @@ router.get('/search/date/:_id', (req, res, next) => {
     }
 });
 
-// router.post('/search/tags', (req, res, next)=>{
-//     let tags = req.body.tags;
-//     let author = req.body._id;
-    
+router.post('/search/tags', (req, res, next)=>{
+    let tags = req.body.tags;
+    let author = req.body.author;
 
-// });
+    Note.find({author: author, enable: true, tags: {$all: tags}}, (err,notes) => {
+        if (err) return res.status(500).res.json({result: 3});
+        res.json(notes);
+    }).sort({modify_date: -1});
+});
 
 router.get('/author/:_id', (req, res, next) => {
     Note.find({author: req.params._id, enable: true}, (err, notes) => {
@@ -121,16 +124,10 @@ router.post('/', (req, res, next) =>{
     notes.content = req.body.content;
     notes.start_date = req.body.start_date;
     notes.end_date = req.body.end_date;
+    notes.tags = req.body.tags;
     notes.create_date = new Date().toString();
     notes.modify_date = new Date().toString();
 
-    if(req.body.tags.constructor === Array){
-        for (let index = 0; index < req.body.tags.length; index++) {
-            notes.tags[index] = req.body.tags[index];
-        }
-    } else {
-        notes.tags[0] = req.body.tags;
-    }
     notes.save((err) => {
         if(err) res.status(500).json({result : 3});
         res.json({result : 0});

@@ -18,9 +18,9 @@ router.get('/logout', (req, res, next) =>{
 
 // /users/login POST(body: userid,name,password) Login(Save Session)
 router.post('/login', (req, res, next) =>{
-  var sess;
-  var id = req.body.userid;
-  var pw = req.body.password;
+  let sess;
+  let id = req.body.userid;
+  let pw = req.body.password;
 
   Users.findOne({userid: id},(err, user) => {
     if (err) {
