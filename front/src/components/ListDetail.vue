@@ -10,7 +10,16 @@
     <input type="date" name="end_date" v-model="end_date"> <br><br>
     <textarea v-model="content" rows="18" placeholder="메모"/><br><br>
 
-    <textarea name="tags"  rows="2" placeholder="#태그"></textarea><br><br>
+    <input type="text" v-model="t" placeholder="#태그" id="tag"><button v-on:click="add()" style="width:60px; margin-left:20px;">추가</button>
+    <ul>
+       <li v-for="(tag, i) in tags" :key="i">
+        {{tag}} <a v-on:click="delet(i)">X</a>
+      </li>
+    </ul>
+    <br>
+
+    <!-- <textarea name="tags"  rows="2" placeholder="#태그"></textarea><br><br> -->
+
     <!-- <vue-editor v-model="content"></vue-editor>
     <quill-editor v-model="content"></quill-editor> -->
     <!--<input type="button" name="input" value="확인"> -->
@@ -32,7 +41,9 @@ export default {
       title: "",
       start_date: "",
       end_date: "",
-      content: ""
+      content: "",
+      t:'',
+      tags:[]
     }
   },
 
@@ -44,6 +55,7 @@ export default {
         this.content = res.data.content;
         this.start_date=res.data.start_date.substring(0,10);
         this.end_date=res.data.end_date.substring(0,10);
+        this.tags = res.data.tags;
       })
       .catch(err => {
 
@@ -59,6 +71,7 @@ export default {
           content: this.content,
           start_date: this.start_date,
           end_date: this.end_date,
+          tags:this.tags
         }).then(res => {
           console.log(res);
           alert("글 작성 성공");
@@ -75,7 +88,8 @@ export default {
           content: this.content,
           start_date: this.start_date,
           end_date: this.end_date,
-          author: this.$session.get("_id")
+          author: this.$session.get("_id"),
+          tags : this.tags
         }).then(res => {
           alert("글 작성 성공");
           this.$router.push({path: '/'});
@@ -90,7 +104,7 @@ export default {
         enable: false
       })
       .then(res => {
-        alert('휴지통 ㅂㅂ');
+        alert('휴지통ㅂㅂ');
         this.$router.push({path: '/'});
       })
       .catch(err => {
@@ -98,9 +112,16 @@ export default {
         alert('글작성 실패');
       });
     },
+    add(){
+      this.tags.push(this.t);
+      this.t = '';
+    },
+    delet(i) {
+      this.tags.splice(i, 1);
+    }
   },
   components:{
-    Sidebar
+    Sidebar,
   },
   
   
@@ -122,6 +143,11 @@ textarea{
   resize: none;
   font-size: 25px;
   font-family: "NanumGothic"
+}
+#tag{
+  width:100px;
+  font-size:15pt;
+  
 }
 input[type=date]{ 
   width: 48.8%;

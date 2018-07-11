@@ -5,7 +5,7 @@
     <ul>
       <li v-for="(note, index) in notes" :key="index">
         <input type="checkbox" v-bind:value="note._id" v-model="notelist">
-        <router-link :to="'/note/' + note._id" tag="label">{{note.title}}</router-link>
+        <label>{{note.title}}</label>
         <p>{{note.content}}</p>
          <hr>
       </li>
