@@ -25,7 +25,7 @@ router.post('/login', (req, res, next) =>{
   Users.findOne({userid: id},(err, user) => {
     if (err) {
       return res.status(500).json({status: 3});
-    }
+    }   
     if (!user) {
       return res.status(404).json({result : 2});
     }
@@ -37,12 +37,11 @@ router.post('/login', (req, res, next) =>{
         return res.status(404).json({result : 1});
       }
       sess = req.session;
-      sess._id = user._id;
-      sess.name = user.name;
+      sess.user = user;
       res.json({
         result : 0,
-        _id: sess._id,
-        name: sess.name
+        _id: user._id,
+        name: user.name
       });
     });
   });
@@ -55,7 +54,7 @@ router.post('/', (req, res, next) => {
   users.name = req.body.name;
   users.password = req.body.password;
 
-  Users.findOne({userid: req.body.userid},(err, user) => {
+  Users.findOne({userid: req.body.userid}, (err, user) => {
     if(!user){
       users.save((err) => {
         if (err) {
@@ -63,7 +62,7 @@ router.post('/', (req, res, next) => {
         }
         res.json({result: 0});
       });
-    }else{
+    } else {
       res.json({result: 1});
     }
   });
