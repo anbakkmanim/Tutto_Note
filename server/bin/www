@@ -1,12 +1,14 @@
+// Dep
 const app = require('../app')
 const debug = require('debug')('tuttonote:server')
 const http = require('http')
 
+// Port
 const port = normalizePort(process.env.PORT || '3000')
 app.set('port', port)
 
+// Instance
 const server = http.createServer(app)
-
 server.listen(port)
 server.on('error', onError)
 server.on('listening', onListening)

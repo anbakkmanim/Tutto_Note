@@ -1,15 +1,22 @@
 const jwt = require('jsonwebtoken')
 
 const tokenMiddleware = (req, res, next) => {
-  const token = req.headers['x-access-token'] || req.query.token
 
+  // Token
+  const token = req.headers['x-access-token']
+  || req.headers.authorization.split(' ')[0] === "Bearer"
+    ? req.headers.authorization.split(' ')[1]
+    : req.query.token
+
+  // If token was not found
   if (!token) {
     return res.status(403).json({
       status: 'ERR',
-      message: 'token not found'
+      message: 'token is not found'
     })
   }
 
+  // Token verify
   const tokenVerify = new Promise((resv, rej) => {
     jwt.verify(token, req.app.get('secret'), (err, decToken) => {
       if (err) rej(err)
@@ -24,6 +31,7 @@ const tokenMiddleware = (req, res, next) => {
     })
   }
 
+  // Logic
   tokenVerify
   .then(decToken => {
     req.decToken = decToken

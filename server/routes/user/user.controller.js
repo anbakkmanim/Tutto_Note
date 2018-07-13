@@ -1,6 +1,7 @@
 const User = require('../../models/user')
 const fs = require('fs')
 
+// PUT /user/:_id
 exports.update = (req, res) => {
   const user = req.body
   const userUid = req.params._id
@@ -33,6 +34,7 @@ exports.update = (req, res) => {
   .catch(onError)
 }
 
+// DELETE /user/:_id
 exports.delete = (req, res) => {
   const userUid = req.params._id
 
@@ -64,6 +66,7 @@ exports.delete = (req, res) => {
   .catch(onError)
 }
 
+// POST /user/:_id
 exports.upload = (req, res) => {
   const userUid = req.params._id
   const mime = ["image/png", "image/jpeg", "image/jpg"]

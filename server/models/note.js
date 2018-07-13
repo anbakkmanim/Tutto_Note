@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+// Model
 const Note = new Schema({
   title: String,
   content: String,
@@ -24,6 +25,7 @@ const Note = new Schema({
   }
 })
 
+// Create Note
 Note.statics.create = function(title, content, author, tags, start_date, end_date) {
   const note = new this({
     title,
@@ -37,6 +39,7 @@ Note.statics.create = function(title, content, author, tags, start_date, end_dat
   return note.save()
 }
 
+// Update Note by Unique ID
 Note.statics.updateByUid = function(_id, note) {
   return this.update({_id}, {
     $set: note
@@ -44,15 +47,18 @@ Note.statics.updateByUid = function(_id, note) {
   .exec()
 }
 
+// Delete Note by Unique ID
 Note.statics.deleteByUid = function(_id) {
   return this.deleteOne({_id})
   .exec()
 }
 
+// Find Note by Unique ID
 Note.statics.findOneByUid = function(_id) {
   return this.findById(_id).exec()
 }
 
+// Find all active Notes
 Note.statics.findAll = function(author) {
   return this.find({
     author,
@@ -62,6 +68,7 @@ Note.statics.findAll = function(author) {
   .exec()
 }
 
+// Find all trash Notes
 Note.statics.findInTrash = function(author) {
   return this.find({
     author,
@@ -71,6 +78,7 @@ Note.statics.findInTrash = function(author) {
   .exec()
 }
 
+// Find Notes by title
 Note.statics.findByTitle = function(author, title) {
   return this.find({
     author,
@@ -81,6 +89,7 @@ Note.statics.findByTitle = function(author, title) {
   .exec()
 }
 
+// Find Notes by date when its in between start_date and end_date
 Note.statics.findByDate = function(author, date) {
   return this.find({
     author,
@@ -100,6 +109,7 @@ Note.statics.findByDate = function(author, date) {
   .exec()
 }
 
+// Find Notes by tags
 Note.statics.findByTags = function(author, tags) {
   return this.find({
     author,

@@ -5,18 +5,13 @@ const User = new Schema({
   userid: String,
   name: String,
   password: String,
-  // history: {
-  //   title: [String],
-  //   tag: [String],
-  //   date: [Date]
-  // },
   avatar: {
     path: {type: String, default: null},
     name: {type: String, default: null}
   }
 })
 
-// Create one User
+// Create User
 User.statics.create = function(userid, name, password) {
   const user = new this({
     userid,
@@ -27,7 +22,7 @@ User.statics.create = function(userid, name, password) {
   return user.save()
 }
 
-// Find one User by userid
+// Find User by userid
 User.statics.findOneById = function(userid) {
   return this.findOne({
     userid
@@ -35,11 +30,12 @@ User.statics.findOneById = function(userid) {
   .exec()
 }
 
-// Find one User by _id
+// Find User by Unique ID
 User.statics.findOneByUid = function(_id) {
   return this.findById(_id).exec()
 }
 
+// Update User by Unique ID
 User.statics.updateByUid = function(_id, user) {
   return this.update({_id}, {
     $set: user
@@ -47,6 +43,7 @@ User.statics.updateByUid = function(_id, user) {
   .exec()
 }
 
+// Delete User by Unique ID
 User.statics.deleteByUid = function(_id) {
   return this.deleteOne({_id})
   .exec()

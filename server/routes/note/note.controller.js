@@ -1,5 +1,6 @@
 const Note = require('../../models/note')
 
+// POST /note
 exports.create = (req, res) => {
   const {
     title,
@@ -33,6 +34,7 @@ exports.create = (req, res) => {
   .catch(onError)
 }
 
+// GET /note
 exports.getAll = (req, res) => {
   const token = req.decToken
 
@@ -54,6 +56,7 @@ exports.getAll = (req, res) => {
   .catch(onError)
 }
 
+// GET /note/:_id
 exports.getOne = (req, res) => {
   const respond = (note) => {
     res.status(200).json({
@@ -73,6 +76,7 @@ exports.getOne = (req, res) => {
   .catch(onError)
 }
 
+// GET /note/get/trash
 exports.getTrash = (req, res) => {
   const token = req.decToken
 
@@ -94,6 +98,7 @@ exports.getTrash = (req, res) => {
   .catch(onError)
 }
 
+// PUT /note/:_id
 exports.update = (req, res) => {
   const note = req.body
   const noteUid = req.params._id
@@ -126,6 +131,7 @@ exports.update = (req, res) => {
   .catch(onError)
 }
 
+// DELETE /note/:_id
 exports.delete = (req, res) => {
   const noteUid = req.params._id
 
@@ -157,6 +163,7 @@ exports.delete = (req, res) => {
   .catch(onError)
 }
 
+// GET /note/search/title
 exports.searchTitle = (req, res) => {
   const token = req.decToken
 
@@ -178,6 +185,7 @@ exports.searchTitle = (req, res) => {
   .catch(onError)
 }
 
+// GET /note/search/date
 exports.searchDate = (req, res) => {
   const token = req.decToken
 
@@ -199,6 +207,7 @@ exports.searchDate = (req, res) => {
   .catch(onError)
 }
 
+// GET /note/search/tags
 exports.searchTags = (req, res) => {
   const token = req.decToken
 
