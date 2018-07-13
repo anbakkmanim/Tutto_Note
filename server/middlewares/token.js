@@ -3,10 +3,7 @@ const jwt = require('jsonwebtoken')
 const tokenMiddleware = (req, res, next) => {
 
   // Token
-  const token = req.headers['x-access-token']
-  || req.headers.authorization.split(' ')[0] === "Bearer"
-    ? req.headers.authorization.split(' ')[1]
-    : req.query.token
+  const token = req.headers['x-access-token'] || req.query.token
 
   // If token was not found
   if (!token) {
