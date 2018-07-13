@@ -10,10 +10,10 @@ const User = new Schema({
   //   tag: [String],
   //   date: [Date]
   // },
-  // user_icon: {
-  //   path: String,
-  //   name: String,
-  // },
+  avatar: {
+    path: {type: String, default: null},
+    name: {type: String, default: null}
+  }
 })
 
 // Create one User
@@ -38,6 +38,18 @@ User.statics.findOneById = function(userid) {
 // Find one User by _id
 User.statics.findOneByUid = function(_id) {
   return this.findById(_id).exec()
+}
+
+User.statics.updateByUid = function(_id, user) {
+  return this.update({_id}, {
+    $set: user
+  })
+  .exec()
+}
+
+User.statics.deleteByUid = function(_id) {
+  return this.deleteOne({_id})
+  .exec()
 }
 
 // Password verify
