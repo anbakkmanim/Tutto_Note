@@ -1,18 +1,13 @@
-/**
- *  기본 라우터 세팅
- */
+const router = require('express').Router()
+const auth = require('./auth')
+const note = require('./note')
 
-const express = require('express');
-let router = express.Router();
-
+// Routing test
 router.get('/', (req, res, next) => {
-  res.end('The quick fox jumps over the lazy brown dog.');
-});
+  res.end(`Hello world!`)
+})
 
-router.get('/sess', (req, res, next) => {
-  // 모든 세션값을 json으로 넘겨줌
-  res.status(200).json(req.session.user);
-  res.end();
-});
+router.use('/auth', auth)
+router.use('/note', note)
 
-module.exports = router;
+module.exports = router
