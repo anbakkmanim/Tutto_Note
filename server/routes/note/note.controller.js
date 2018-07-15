@@ -1,4 +1,5 @@
 const Note = require('../../models/note')
+const fs = require('fs')
 
 // POST /note
 exports.create = (req, res) => {
@@ -140,6 +141,8 @@ exports.delete = (req, res) => {
       throw new Error('note not found')
     }
     else {
+      if(recvNote.file)
+        fs.unlink(file.path)
       return Note.deleteByUid(noteUid)
     }
   }
@@ -225,6 +228,78 @@ exports.searchTags = (req, res) => {
   }
 
   Note.findByTags(token.user._id, req.query.tags)
+  .then(User.updateLastSearchByTags(token.user._id, req.query.tags))
+  .then(respond)
+  .catch(onError)
+}
+
+exports.attach = (req, res) => {
+  const noteUid = req.params._id
+  const files = req.files
+  let document = new Array()
+
+  files.forEach(el => {
+    document.push({
+      path: el.path,
+      name: el.originalname
+    })
+  })
+  const update = (recvNote) => {
+    if (!recvNote) {
+      throw new Error('note not found')
+    }
+    else {
+      console.log(1)
+      return Note.updateByUid(noteUid, {
+        file: document
+      })
+    }
+  }
+
+  const respond = () => {
+    res.status(200).json({
+      status: 'SUC'
+    })
+  }
+
+  const onError = (err) => {
+    res.status(403).json({
+      status: 'ERR',
+      message: err.message
+    })
+  }
+
+  Note.findOneByUid(noteUid)
+  .then(update)
+  .then(respond)
+  .catch(onError)
+}
+
+exports.cascade = (req, res) => {
+
+  const deleteAll = (notes) => {
+    notes.forEach(el => {
+      if(el.file)
+        fs.unlinkSync(el.path)
+      Note.deleteByUid(el._id)
+    })
+  }
+
+  const respond = () => {
+    res.status(200).json({
+      status: 'SUC'
+    })
+  }
+
+  const onError = (err) => {
+    res.status(403).json({
+      status: 'ERR',
+      message: err.message
+    })
+  }
+
+  Note.findAll(req.params._id)
+  .then(deleteAll)
   .then(respond)
   .catch(onError)
 }

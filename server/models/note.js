@@ -7,7 +7,7 @@ const Note = new Schema({
   content: String,
   file: [{
     path: String,
-    original_name: String
+    name: String
   }],
   author: {type: Schema.Types.ObjectId, ref: 'users'},
   enable: {type: Boolean, default: true},
@@ -82,7 +82,9 @@ Note.statics.findInTrash = function(author) {
 Note.statics.findByTitle = function(author, title) {
   return this.find({
     author,
-    title,
+    title: {
+      $regex: ".*" + title + ".*"
+    },
     enable: true
   })
   .sort({modify_date: -1})
