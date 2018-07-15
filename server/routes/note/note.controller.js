@@ -228,7 +228,6 @@ exports.searchTags = (req, res) => {
   }
 
   Note.findByTags(token.user._id, req.query.tags)
-  .then(User.updateLastSearchByTags(token.user._id, req.query.tags))
   .then(respond)
   .catch(onError)
 }
