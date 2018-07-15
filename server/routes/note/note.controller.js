@@ -232,6 +232,7 @@ exports.searchTags = (req, res) => {
   .catch(onError)
 }
 
+// POST /note/:_id/attach
 exports.attach = (req, res) => {
   const noteUid = req.params._id
   const files = req.files
@@ -274,8 +275,8 @@ exports.attach = (req, res) => {
   .catch(onError)
 }
 
+// DELETE /note/:_id/cascade
 exports.cascade = (req, res) => {
-
   const deleteAll = (notes) => {
     notes.forEach(el => {
       if(el.file)
