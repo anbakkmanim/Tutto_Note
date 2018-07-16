@@ -8,13 +8,14 @@ exports.create = (req, res) => {
     content,
     tags,
     start_date,
-    end_date
+    end_date,
+    color
   } = req.body
   const token = req.decToken
   const author = token.user._id
 
   const create = () => {
-    return Note.create(title, content, author, tags, start_date, end_date)
+    return Note.create(title, content, author, tags, start_date, end_date, color)
   }
 
   const respond = () => {
@@ -40,9 +41,17 @@ exports.getAll = (req, res) => {
   const token = req.decToken
 
   const respond = (notes) => {
+    if(!notes){
+      res.status(404).json({
+        status: 'ERR',
+        message: 'Empty notes'
+      })
+      return;
+    }
     res.status(200).json({
       notes
     })
+
   }
 
   const onError = (err) => {
@@ -60,6 +69,13 @@ exports.getAll = (req, res) => {
 // GET /note/:_id
 exports.getOne = (req, res) => {
   const respond = (note) => {
+    if(!note){
+      res.status(404).json({
+        status: 'ERR',
+        message: 'Empty note'
+      })
+      return;
+    }
     res.status(200).json({
       note
     })
@@ -72,7 +88,7 @@ exports.getOne = (req, res) => {
     })
   }
 
-  Note.findOneByUid(req._id)
+  Note.findOneByUid(req.params._id)
   .then(respond)
   .catch(onError)
 }
@@ -82,6 +98,13 @@ exports.getTrash = (req, res) => {
   const token = req.decToken
 
   const respond = (notes) => {
+    if(!notes){
+      res.status(404).json({
+        status: 'ERR',
+        message: 'Empty notes'
+      })
+      return;
+    }
     res.status(200).json({
       notes
     })
@@ -171,6 +194,13 @@ exports.searchTitle = (req, res) => {
   const token = req.decToken
 
   const respond = (notes) => {
+    if(!notes){
+      res.status(404).json({
+        status: 'ERR',
+        message: 'Empty notes'
+      })
+      return;
+    }
     res.status(200).json({
       notes
     })
@@ -193,6 +223,13 @@ exports.searchDate = (req, res) => {
   const token = req.decToken
 
   const respond = (notes) => {
+    if(!notes){
+      res.status(404).json({
+        status: 'ERR',
+        message: 'Empty notes'
+      })
+      return;
+    }
     res.status(200).json({
       notes
     })
@@ -215,6 +252,13 @@ exports.searchTags = (req, res) => {
   const token = req.decToken
 
   const respond = (notes) => {
+    if(!notes){
+      res.status(404).json({
+        status: 'ERR',
+        message: 'Empty notes'
+      })
+      return;
+    }
     res.status(200).json({
       notes
     })
