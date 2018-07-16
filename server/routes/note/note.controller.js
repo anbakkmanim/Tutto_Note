@@ -72,7 +72,7 @@ exports.getOne = (req, res) => {
     })
   }
 
-  Note.findOneByUid(req._id)
+  Note.findOneByUid(req.params._id)
   .then(respond)
   .catch(onError)
 }
