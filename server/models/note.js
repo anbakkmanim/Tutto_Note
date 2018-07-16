@@ -22,18 +22,20 @@ const Note = new Schema({
     width: {type: Number, default: 200},
     height: {type: Number, default: 200},
     is_opened: {type: Boolean, default: false}
-  }
+  },
+  color: {type: String, default: 'grey darken-2'}
 })
 
 // Create Note
-Note.statics.create = function(title, content, author, tags, start_date, end_date) {
+Note.statics.create = function(title, content, author, tags, start_date, end_date, color) {
   const note = new this({
     title,
     content,
     author,
     tags,
     start_date,
-    end_date
+    end_date,
+    color
   })
 
   return note.save()
