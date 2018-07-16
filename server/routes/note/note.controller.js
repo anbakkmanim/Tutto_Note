@@ -164,8 +164,11 @@ exports.delete = (req, res) => {
       throw new Error('note not found')
     }
     else {
-      if(recvNote.file)
-        fs.unlink(file.path)
+      if (recvNote.file != []) {
+        recvNote.file.forEach(el => {
+          fs.unlinkSync(el.path)
+        })
+      }
       return Note.deleteByUid(noteUid)
     }
   }
