@@ -17,10 +17,9 @@ exports.create = (req, res) => {
   const create = () => {
     return Note.create(title, content, author, tags, start_date, end_date, color)
   }
-
   const respond = () => {
     res.status(200).json({
-      status: 'SUC',
+      status: 'SUC'
     })
   }
 
@@ -279,9 +278,10 @@ exports.searchTags = (req, res) => {
   .catch(onError)
 }
 
-// POST /note/:_id/attach
+// POST /note/attach
 exports.attach = (req, res) => {
-  const noteUid = req.params._id
+  const token = req.decToken
+
   const files = req.files
   let document = new Array()
 
@@ -291,16 +291,18 @@ exports.attach = (req, res) => {
       name: el.originalname
     })
   })
-  const update = (recvNote) => {
-    if (!recvNote) {
-      throw new Error('note not found')
-    }
-    else {
-      console.log(1)
-      return Note.updateByUid(noteUid, {
-        file: document
-      })
-    }
+
+  const findLastNote = () => {
+    return Note.findLastInserted(token.user._id)
+  }
+  const getNoteUid = (notes) => {
+    return noteUid = notes[0]._id
+  }
+
+  const update = (noteUid) => {
+    return Note.updateByUid(noteUid, {
+      file: document
+    })
   }
 
   const respond = () => {
@@ -316,7 +318,8 @@ exports.attach = (req, res) => {
     })
   }
 
-  Note.findOneByUid(noteUid)
+  findLastNote()
+  .then(getNoteUid)
   .then(update)
   .then(respond)
   .catch(onError)

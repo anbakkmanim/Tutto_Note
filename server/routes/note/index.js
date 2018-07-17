@@ -27,6 +27,6 @@ router.get('/search/date', controller.searchDate)
 
 router.get('/get/trash', controller.getTrash)
 
-router.post('/:_id/attach', upload.array('attach'), controller.attach)
+router.post('/attach', upload.array('attach'), controller.attach)
 
 module.exports = router

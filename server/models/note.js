@@ -35,7 +35,9 @@ Note.statics.create = function(title, content, author, tags, start_date, end_dat
     tags,
     start_date,
     end_date,
-    color
+    color,
+    create_date: new Date().toLocaleString(),
+    modify_date: new Date().toLocaleString()
   })
 
   return note.save()
@@ -44,7 +46,8 @@ Note.statics.create = function(title, content, author, tags, start_date, end_dat
 // Update Note by Unique ID
 Note.statics.updateByUid = function(_id, note) {
   return this.update({_id}, {
-    $set: note
+    $set: note,
+    modify_date: new Date().toLocaleString()
   })
   .exec()
 }
@@ -67,6 +70,17 @@ Note.statics.findAll = function(author) {
     enable: true
   })
   .sort({modify_date: -1})
+  .exec()
+}
+
+// Find Last Inserted Note
+Note.statics.findLastInserted = function(author) {
+  return this.find({
+    author,
+    enable: true
+  })
+  .sort({modify_date: -1})
+  .limit(1)
   .exec()
 }
 
