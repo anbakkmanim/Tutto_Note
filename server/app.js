@@ -31,7 +31,7 @@ app.use(logger('dev'))
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use('/file', express.static(path.join(__dirname, '/public')))
+app.use('/public', express.static(path.join(__dirname, '/public')))
 
 // Disable CORS(Cross-Origin Resource Sharing)
 app.use(cors())
