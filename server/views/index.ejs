@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tutto Note</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="http://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100:300,400,500,700,900|Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+  <style>
+    html, body {
+      background-color: #00796B; /* 배경색 */
+    }
+    #hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="hidden">
+    <%= color %>
+  </div>
+  <div class="draggable">
+  </div>
+  <div class="right">
+    <i class="material-icons" onclick="windowClose()">close</i>
+  </div>
+  <div id="app">
+    <div class="heading"><%= title %></div>
+    <div class="content">
+      <%= content %>
+    </div>
+  </div>
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.right').on('click', function() {
+        window.close()
+      })
+
+      let html = document.getElementsByTagName('html')[0]
+      let body = document.getElementsByTagName('body')[0]
+      let color = document.getElementById('hidden').innerHTML
+
+      html.style.backgroundColor = color
+      body.style.backgroundColor = color
+    })
+  </script>
+</body>
+</html>

@@ -11,6 +11,7 @@
     "cors": "^2.8.4",
     "debug": "~2.6.9",
     "dotenv": "^6.0.0",
+    "ejs": "^2.6.1",
     "express": "~4.16.0",
     "express-session": "^1.15.6",
     "http-errors": "^1.6.3",

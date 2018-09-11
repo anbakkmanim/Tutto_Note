@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const path = require('path')
+const fs = require('fs')
 
 // Load .env file
 require('dotenv').config()
@@ -26,6 +27,10 @@ db.once('open', () => {
 })
 
 const app = express()
+
+app.set('views', path.join(__dirname + '/views'))
+app.set('view engine', 'ejs')
+app.engine('html', require('ejs').renderFile)
 
 app.use(logger('dev'))
 app.use(cookieParser())
