@@ -1,28 +1,19 @@
-
-
 import Vue from 'vue'
+import './plugins/vuetify'
+import './plugins/vue-moment'
+
 import App from './App.vue'
-// axios
-import axios from 'axios'
-// vue-session
-import VueSession from 'vue-session'
-//import { VueEditor } from 'vue2-editor'
-
-
-
-// 라우터
 import router from './router'
+import store from './store'
 
-Vue.config.productionTip = false;
+import axios from 'axios'
 
-// axios 사용
-Vue.prototype.$http = axios;
-Vue.use(VueSession);
+Vue.config.productionTip = false
 
+Vue.http = Vue.prototype.$http = axios
 
-// Vue 객체 정의
 new Vue({
-  el: '#app',
   router,
+  store,
   render: h => h(App)
-});
+}).$mount('#app')
