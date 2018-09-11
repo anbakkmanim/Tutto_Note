@@ -1,68 +1,57 @@
-/**
- *  Tutto Note node.js Backend Server
- */
+// Load modules
+const debug = require('debug')('tuttonote:server')
+const express = require('express')
+const session = require('express-session')
+const createError = require('http-errors')
+const logger = require('morgan')
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+const cors = require('cors')
+const path = require('path')
 
-// 모듈 불러오기
-const express = require('express');
-const session = require('express-session');
-const createError = require('http-errors');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const cors = require('cors');
+// Load .env file
+require('dotenv').config()
 
-// 원격지 관련 기본 세팅
-const mongo_dest = 'mongodb://115.68.24.158:27017/tuttonote';
-
-// 라우터 정의
-let indexRouter = require('./routes/index');
-let usersRouter = require('./routes/users');
-let noteRouter = require('./routes/note');
-let app = express();
-
-
-// MongoDB 연결
-let db = mongoose.connection;
-db.on('error', console.error);
+// MongoDB connection
+const mongoDest = `mongodb://${process.env.HOST}:27017`
+mongoose.connect(mongoDest, {
+  useNewUrlParser: true,
+  dbName: process.env.MONGO_DATABASE,
+})
+const db = mongoose.connection
+db.on('error', console.error)
 db.once('open', () => {
-  console.log('MongoDB 서버에 연결되었습니다.');
-});
-mongoose.connect(mongo_dest);
+  debug(`MongoDB: successfully connected on ${mongoDest}`)
+})
 
-// 앱 세팅
-app.use(logger('dev'));
+const app = express()
 
-app.use(cookieParser());
-app.use(session({
-  secret: '#@Xg3fd21&%v',
-  resave: false,
-  saveUninitialized: true
- }));
+app.use(logger('dev'))
+app.use(cookieParser())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use('/public', express.static(path.join(__dirname, '/public')))
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// Disable CORS(Cross-Origin Resource Sharing)
+app.use(cors())
 
-app.use(cors());
+// JWT secret key setting
+app.set('secret', process.env.SECRET || 'SECRET@KEY#WAS#NOT@SET')
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/note', noteRouter);
+// Routing
+app.use('/', require('./routes/index'))
 
-// 정의되지 않은 접속에 404 보내기
+// Send 404 if route is not defined
 app.use((req, res, next) => {
-  next(createError(404));
-});
+  next(createError(404))
+})
 
-// 에러 핸들러
+// Error handling
 app.use((err, req, res, next) => {
-  // 개발 모드일 시 로그에 에러 메시지 출력
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.message = err.message
+  res.locals.error = req.app.get('env') === 'development' ? err : {}
+  res.status(err.status || 500)
+})
 
-  // 에러 응답 보내기
-  res.status(err.status || 500);
-});
-
-// 앱 내보내기
-module.exports = app;
+module.exports = app

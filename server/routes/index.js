@@ -1,12 +1,15 @@
-/**
- *  기본 라우터 세팅
- */
+const router = require('express').Router()
+const auth = require('./auth')
+const note = require('./note')
+const user = require('./user')
 
-const express = require('express');
-let router = express.Router();
-
+// Routing test
 router.get('/', (req, res, next) => {
-  res.end('The quick fox jumps over the lazy brown dog.');
-});
+  res.end(`Hello world!`)
+})
 
-module.exports = router;
+router.use('/auth', auth)
+router.use('/note', note)
+router.use('/user', user)
+
+module.exports = router
