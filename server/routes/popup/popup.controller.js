@@ -30,7 +30,7 @@ exports.getPopup = (req, res) => {
                               break                      
     }
 
-    note.content = note.content.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '<br>')
+    note.content = note.content.replace(/(\r\n|\n\r|\r|\n)/g, '<br>')
     res.render('index', {
       title: note.title,
       content: note.content,
