@@ -29,6 +29,8 @@ exports.getPopup = (req, res) => {
       case "grey darken-2": color = "#616161" 
                               break                      
     }
+
+    content = content.replace('/\n/g', "<br>")
     res.render('index', {
       title: note.title,
       content: note.content,
