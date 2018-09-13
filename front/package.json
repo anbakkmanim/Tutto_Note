@@ -7,7 +7,9 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@vue/cli": "^3.0.1",
     "axios": "^0.18.0",
+    "global": "^4.3.2",
     "querystring": "^0.2.0",
     "vue": "^2.5.16",
     "vue-moment": "^4.0.0",
