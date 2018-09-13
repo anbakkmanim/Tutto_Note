@@ -30,7 +30,7 @@ exports.getPopup = (req, res) => {
                               break                      
     }
 
-    content = content.replace('/\n/g', "<br>")
+    note.content = note.content.replace('/\n/g', "<br>")
     res.render('index', {
       title: note.title,
       content: note.content,
